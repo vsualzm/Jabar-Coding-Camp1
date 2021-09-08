@@ -1,0 +1,47 @@
+<!-- soal2 -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <button onclick="vm.openForm()">Open Form</button>
+      <h1>{{ 'Nilai a : ' + a}}</h1>
+      <h1>{{ 'Nilai Rata-rata A : ' + b}}</h1>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+      var vm = new Vue({
+        el: "#app",
+        data: {
+          a: 0,
+          b: 0,
+        },
+        methods: {
+          openForm: function () {
+            let check = 1;
+            let total = parseInt(this.b);
+
+            // loop terus berjalan selama check di bawah 4
+
+            while (check <= 4) {
+              this.a = prompt("masukan nilai A");
+              let jumlah = parseInt(this.a);
+              total += jumlah;
+              check++;
+            }
+            let rata = 0;
+            this.b = total / 4;
+            this.a = total;
+          },
+        },
+      });
+    </script>
+    <script></script>
+  </body>
+</html>
