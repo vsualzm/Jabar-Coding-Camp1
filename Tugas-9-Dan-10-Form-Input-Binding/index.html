@@ -1,0 +1,40 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mencari List game</title>
+    <style>
+      body {
+        font-family: "poppins", sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <h1>Selamat Datang di mesin Pencari ilham</h1>
+      <input type="text" v-model="search" placeholder="Cari Games" />
+      <ul v-for="game in kotak">
+        <li>{{ game }}</li>
+      </ul>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+      var vm = new Vue({
+        el: "#app",
+        data: {
+          search: "",
+          listGame: ["Atlantica", " Airsofgun", "Assasin Creed", "MetalSlug", "Crash Bandicoot", "Lost Saga", "Point Blank", "Ayo Dance"],
+        },
+        computed: {
+          kotak() {
+            return this.listGame.filter((kode) => {
+              return kode.toLowerCase().includes(this.search.toLowerCase());
+            });
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
