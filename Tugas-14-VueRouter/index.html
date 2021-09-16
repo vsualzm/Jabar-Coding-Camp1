@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VUE ROUTER ILHAM MAULANA</title>
+    <style>
+      * {
+        list-style: none;
+      }
+      body {
+        text-align: center;
+        font-family: poppins;
+        list-style: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <h1>VSUALZM WEB</h1>
+      <!-- Pengganti tag <a href=""></a>  -->
+      <router-link to="/">HOME</router-link>
+      <router-link to="/about">ILHAM</router-link>
+      <router-link to="/categories">MENU</router-link>
+
+      <!-- Untuk Menampilkan component secara dinamis , sesuai dengan route yang diakses -->
+      <router-view></router-view>
+    </div>
+
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <script type="module">
+      import { CategoriesComponent } from "./CategoriesComponent.js";
+      import { CategoryComponent } from "./CategoryComponent.js";
+
+      const Home = { template: "<div>Selamat datang di web ilham </div>" };
+      const About = { template: "<div>HALOO INI SAYA ILHAM MAULANA </div>" };
+      const routes = [
+        { path: "/", component: Home, alias: "/home" },
+        { path: "/about", component: About, meta: { login: true } },
+        { path: "/categories", component: CategoriesComponent, meta: { login: true, role: true } },
+        { path: "/category/:id", component: CategoryComponent },
+        { path: "*", redirect: "/" },
+      ];
+      const router = new VueRouter({
+        routes,
+      });
+
+      router.beforeEach((to, from, next) => {
+        if (to.matched.some((record) => record.meta.login)) {
+          let auth = true;
+          if (!auth) {
+            alert("Halaman ini hanya untuk user yang sudah login!");
+            next(false);
+          } else {
+            if (to.matched.some((record) => record.meta.role)) {
+              let role = prompt('masukan id ilham "12345"');
+              if (role === "12345") {
+                next();
+              } else {
+                alert("akses hanya bagi ilham");
+                next(false);
+              }
+            } else {
+              alert("anda sekarang menjadi ilham");
+              next();
+            }
+          }
+        } else {
+          next();
+        }
+      });
+
+      var vm = new Vue({
+        el: "#app",
+        router,
+      });
+    </script>
+  </body>
+</html>
