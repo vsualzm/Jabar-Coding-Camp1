@@ -1,6 +1,9 @@
 <template>
 <!-- App.vue -->
 <v-app>
+
+  <alert/>
+
   <v-navigation-drawer app v-model="drawer">
     <v-list>
       <v-list-item v-if="!guest">
@@ -13,7 +16,7 @@
       </v-list-item>
 
       <div class="pa-2" v-if="guest">
-        <v-btn block color="primary" class="mb-1">
+        <v-btn block color="primary" class="mb-1" @click="login">
           <v-icon left>mdi-lock</v-icon>
           Login
         </v-btn> 
@@ -42,7 +45,7 @@
     </v-list>
     <template v-slot:append v-if="!guest">
       <div class="pa-2">
-        <v-btn block color="red" dark>
+        <v-btn block color="red" dark @click="logout">
           <v-icon left>mdi-lock</v-icon>
           Logout
         </v-btn>
@@ -75,17 +78,49 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+import Alert from './components/Alert.vue';
 
 export default {
+  components: { Alert },
   name: 'App',
 
   data: () => ({
-    drawer : true,
+    drawer : false,
     menus : [
       {title : 'Home', icon : 'mdi-home', route : '/' },
       {title : 'Blogs', icon : 'mdi-note', route : '/blogs' },
+      
     ],
-    guest : true
+    guest : true,
+    snackbarStatus : false,
+    snackbarText : 'Anda berhasil login'
   }),
+
+  methods : {
+    logout(){
+      this.guest = true
+      this.setAlert({
+        status  :true,
+        color : 'success',
+        text : 'anda Berhasil logout',
+      })
+    },
+
+    login(){
+      this.guest = false
+      this.setAlert({
+        status  : true,
+        color   : 'success',
+        text    : 'Anda berhasil Login'
+      })
+    },
+    ...mapActions({
+      setAlert : 'alert/set'
+    })
+  },
+  mounted(){
+    this.snackbarStatus = true
+  }
 };
 </script>
