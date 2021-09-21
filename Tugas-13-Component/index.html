@@ -22,7 +22,7 @@
                 <label for="no_hp">No. Telpon : </label>
                 <input :disabled="buttonStatus == 'upload'" type="text" id="no_hp" name="no_hp" ref="no_hp" v-model="no_hp">
             <div v-if="buttonStatus == 'submit'">
-                <button type="submit">SUBMIT</button>
+                <button type="submit" value="SUBMIT">SUBMIT</button>
             </div>
             <div v-else-if="buttonStatus == 'update'">
                 <button type="button" @click="updateMember(idMemberEdit)">UPDATE</button>
